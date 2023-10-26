@@ -1,4 +1,4 @@
-package trackia.app.example.helloworld.exception;
+package trackia.app.example.helloworld.rt.exception;
 
 public class ExceptionResponse{
 	private String code;

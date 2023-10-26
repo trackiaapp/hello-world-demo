@@ -1,4 +1,4 @@
-package trackia.app.example.helloworld.exception;
+package trackia.app.example.helloworld.rt.exception;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

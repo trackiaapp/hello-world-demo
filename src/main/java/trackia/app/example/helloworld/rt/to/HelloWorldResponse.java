@@ -1,18 +1,15 @@
-package trackia.app.example.helloworld.to;
+package trackia.app.example.helloworld.rt.to;
 
-import trackia.app.to.Journal;
+import trackia.app.util.TrackiaTransactionTrace;
 
 public class HelloWorldResponse {
 	private String hello;
 	private String journalId;
 	private String help;
 	
-	public HelloWorldResponse() {
-		this.help = "local, service, error";
-	}
 	
-	public HelloWorldResponse(Journal journal) {
-		this.journalId = journal.getTransactionId();
+	public HelloWorldResponse() {
+		this.journalId = TrackiaTransactionTrace.getTransactionId();
 		this.help = "local, service, error";
 	}
 	

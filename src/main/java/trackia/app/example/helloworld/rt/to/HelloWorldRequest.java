@@ -1,4 +1,4 @@
-package trackia.app.example.helloworld.to;
+package trackia.app.example.helloworld.rt.to;
 
 public class HelloWorldRequest {
 	private String type;
