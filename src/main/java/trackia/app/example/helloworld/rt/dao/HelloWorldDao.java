@@ -1,38 +1,38 @@
 package trackia.app.example.helloworld.rt.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import lombok.AllArgsConstructor;
 import trackia.app.Trackia;
-import trackia.app.annotations.R;
-import trackia.app.example.helloworld.rt.exception.NegocioException;
-import trackia.app.example.helloworld.rt.to.HelloWorldRequest;
+import trackia.app.example.helloworld.rt.config.AppConfiguration;
+import trackia.app.example.helloworld.rt.exception.BusinessException;
 import trackia.app.util.RestTemplateJournal;
-import trackia.app.util.TrackiaTransactionTrace;
+
 
 
 @Component
+@AllArgsConstructor
 public class HelloWorldDao {
-	@Value(value = "${app.mynameis}")
-    private String url;
-	
-	@Autowired
-	private RestTemplateJournal restTemplate;
+	final RestTemplateJournal restTemplate;
+	final AppConfiguration properties;
 	
 	
-	@Trackia(value = "DAO_LOCAL", description = "Greeting local")
+	@Trackia
 	public String local() {
-		return ", my name is @TrackIA";
+		return ", my name is @Trackia";
 	}
 	
-	@Trackia(value = "DAO_LOCAL", description = "Greeting from external rest service")
+	@Trackia
 	public String service() {
 		try {
-	         return restTemplate.getForObject(url, String.class);
+	         return restTemplate.getForObject(properties.getMynameis(), String.class);
 		}catch(Exception e) {
-			throw new NegocioException(HttpStatus.INTERNAL_SERVER_ERROR, "301", "Cannot connect to service myNameIs", TrackiaTransactionTrace.getTransactionId(), e);
+			/* Excepciones de negocio lanzadas son trackeadas */
+			throw new BusinessException(
+				HttpStatus.INTERNAL_SERVER_ERROR,
+				"301", 
+				"Cannot connect to service myNameIs", e);
 		}
 	}
 }
